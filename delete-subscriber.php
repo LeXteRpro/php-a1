@@ -5,17 +5,19 @@
     <title>Delete Subscribers</title>
 </head>
 <body>
-    <?php 
+    <?php
 //Send any html to an output
 ob_start();
 ?>
 
 <?php
+require_once 'config.php';
+
 //1. Grab the subscriber_id from the url querystring
 $subscriber_id = $_GET['subscriber_id'];
 
 //2. Connect
-$conn = new PDO('mysql:host=mysql5.loosefoot.com;dbname=gc200261414', ' gc200261414', 'Orie2015');
+$conn = $dbc;
 
 
 //3. Write & then execute the sql command to delete the selected record
@@ -29,7 +31,7 @@ $conn = null;
 header ('location:subscribers.php');
 echo $sql;
 ?>
-    
+
 </body>
 </html>
 

@@ -8,25 +8,27 @@
 
 
 <?php
+require_once 'config.php';
+
 //check if we have a subscriber ID in the querystring
 if isset($_GET['subscriber_id'])) {
 //if we do, store in a variable
 
     //connect
-    $con = new PDO('mysql:host=mysql5.loosefoot.com;dbname=gc200261414', ' gc200261414', 'Orie2015');
-    
+    $con = $dbc;
+
     //select all the data for the selected subscriber
     $sql = "SELECT" * FROM subscribers WHERE subscriber_id = $subscriber_id";
     $result = $conn->query($sql);
-    
+
     //store each value from the database into a variable
-    
+
     foreach ($result as $row) {
     $first_name = ;
     $last_name = $row['last_name'];
     $email = $row['email']
     }
-    
+
     //disconnect
     $conn = null;
     }

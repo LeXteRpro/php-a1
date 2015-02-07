@@ -11,8 +11,10 @@
 
 <a href ="subscriber.php">Add new Subscriber</a>
 <?php
-//1. connect
-$conn = new PDO('mysql:host=mysql5.loosefoot.com;dbname=gc200261414', 'gc200261414', 'Orie2015');
+require_once 'config.php';
+
+//1. connec
+$conn = $dbc;
 
 //2. write sql query
 $sql = "SELECT * FROM subscribers";
@@ -34,7 +36,7 @@ echo '<table><tr><th>First Name</th><th>Last Name</th><th>Email</th><th>Edit</th
             <td>' .$row['last_name'] . '</td>
             <td>' .$row['email'] . '</td>
         <td><a href="subscriber.php?subscriber_id=' . $row['subscriber_id']
-        <td><a href= "delete-subscriber.php?subscriber_id=' . $row['subscriber_id'] . '"onclick="return confirm(\'Are you sure you want to delete this subscriber?\');">Delete</a></td></tr>'; 
+        <td><a href= "delete-subscriber.php?subscriber_id=' . $row['subscriber_id'] . '"onclick="return confirm(\'Are you sure you want to delete this subscriber?\');">Delete</a></td></tr>';
 }
 //6. Close the table
 
