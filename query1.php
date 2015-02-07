@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta content=text/html; charset="UTF-8" http-equip="Content-type">>
-    <title>First Names</title>
+    <title>Last Name</title>
     
         <link href="styles.css" rel="stylesheet" media="screen">
     
