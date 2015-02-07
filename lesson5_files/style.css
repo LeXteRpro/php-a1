@@ -1,0 +1,13 @@
+﻿table {
+	border: thin;
+	border-style: solid;
+	border-color: red;
+	color: navy;
+	text-transform: uppercase;
+	background-color: lightgray;
+	width: 500px;
+}
+
+th {
+	color: green;
+}
