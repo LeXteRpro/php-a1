@@ -5,16 +5,33 @@
     $last_name = "";
     $email = "";
 
+    $action = "subscriber.php";
+
     if (isset($_POST['submit']) ) {
+        $conn = $dbc;
+
+        $first_name = $_POST['first_name'];
+        $last_name = $_POST['last_name'];
+        $email = $_POST['email'];
         //user clicked "submit"
-         if (!isset($_GET['subscriber_id'])) {
+         if (isset($_GET['subscriber_id'])) {
+
+            //Update subscribers
+            $subscriber_id = $_GET['subscriber_id'];
+            $sql =
+                "UPDATE subscribers
+                SET
+                    first_name = '$first_name',
+                    last_name = '$last_name',
+                    email = '$email'
+                WHERE
+                    subscriber_id = $subscriber_id";
+            $conn->query($sql);
+
+            header('Location: subscribers.php');
+         }
+         else {
             //Create new subscriber
-            $conn = $dbc;
-
-            $first_name = $_POST['first_name'];
-            $last_name = $_POST['last_name'];
-            $email = $_POST['email'];
-
             $sql =
                 "INSERT INTO subscribers
                 (first_name,    last_name,    email   ) VALUES
@@ -45,6 +62,8 @@
             $email = $row['email'];
         }
 
+        $action .= "?subscriber_id=$subscriber_id";
+
         //disconnect
         $conn = null;
     }
@@ -56,7 +75,7 @@
         <title>Subscriber</title>
     </head>
     <body>
-        <form method="post" action="subscriber.php">
+        <form method="post" action="<?php echo $action; ?>">
             <div>
                 <label for="first_name">First Name:</label>
                 <input name="first_name" required value="<?php echo $first_name; ?>" />
