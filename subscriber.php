@@ -1,60 +1,75 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-<title>Subscriber</title>
-</head>
-
-
-
 <?php
-require_once 'config.php';
+    require_once 'config.php';
 
-//check if we have a subscriber ID in the querystring
-if isset($_GET['subscriber_id'])) {
-//if we do, store in a variable
+    $first_name = "";
+    $last_name = "";
+    $email = "";
 
-    //connect
-    $con = $dbc;
+    if (isset($_POST['submit']) ) {
+        //user clicked "submit"
+         if (!isset($_GET['subscriber_id'])) {
+            //Create new subscriber
+            $conn = $dbc;
 
-    //select all the data for the selected subscriber
-    $sql = "SELECT" * FROM subscribers WHERE subscriber_id = $subscriber_id";
-    $result = $conn->query($sql);
+            $first_name = $_POST['first_name'];
+            $last_name = $_POST['last_name'];
+            $email = $_POST['email'];
 
-    //store each value from the database into a variable
+            $sql =
+                "INSERT INTO subscribers
+                (first_name,    last_name,    email   ) VALUES
+                ('$first_name', '$last_name', '$email')";
+            $conn->query($sql);
 
-    foreach ($result as $row) {
-    $first_name = ;
-    $last_name = $row['last_name'];
-    $email = $row['email']
+            header('Location: subscribers.php');
+         }
     }
 
-    //disconnect
-    $conn = null;
+    //check if we have a subscriber ID in the querystring
+    if (isset($_GET['subscriber_id'])) {
+        //if we do, store in a variable
+
+        //connect
+        $conn = $dbc;
+
+        //select all the data for the selected subscriber
+        $subscriber_id = $_GET['subscriber_id'];
+        $sql = "SELECT * FROM subscribers WHERE subscriber_id = $subscriber_id";
+        $result = $conn->query($sql);
+
+        //store each value from the database into a variable
+
+        foreach ($result as $row) {
+            $first_name = $row['first_name'];
+            $last_name = $row['last_name'];
+            $email = $row['email'];
+        }
+
+        //disconnect
+        $conn = null;
     }
 ?>
 
-<body onload ="location.href='subscribers.php';">
-
-<form method="post" action="save-subscriber.php">
-
-<div>
-    <label for="first_name">First Name:</label>
-    <input name="first_name" required value="[SOMETHING-HERE]" />
-</div>
-<div>
-    <label for="last_name">Last Name:</label>
-    <input name="last_name" required value="[SOMETHING-HERE]" />
-</div>
-<div>
-    <label for="email">Email:</label>
-    <input name="email" required type="email" value="[SOMETHING-HERE]" />
-</div>
-<input type="[SOMETHING-HERE]" name="[SOMETHING-HERE]" value="[SOMETHING-HERE]" />
-<input type="submit" value="Subscribe" />
-
-</form>
-
-</body>
-
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Subscriber</title>
+    </head>
+    <body>
+        <form method="post" action="subscriber.php">
+            <div>
+                <label for="first_name">First Name:</label>
+                <input name="first_name" required value="<?php echo $first_name; ?>" />
+            </div>
+            <div>
+                <label for="last_name">Last Name:</label>
+                <input name="last_name" required value="<?php echo $last_name; ?>" />
+            </div>
+            <div>
+                <label for="email">Email:</label>
+                <input name="email" required type="email" value="<?php echo $email; ?>" />
+            </div>
+            <input type="submit" name="submit" value="Subscribe" />
+        </form>
+    </body>
 </html>
